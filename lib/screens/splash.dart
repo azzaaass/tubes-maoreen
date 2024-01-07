@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              child: Image.asset("../assets/images/logo.png"),
+              child: Image.asset("assets/images/logo.png"),
             )
           ],
         ),
