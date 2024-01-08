@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:toku/screens/checkout.dart';
+import 'package:toku/screens/homepage.dart';
+import 'package:toku/screens/user_page.dart';
 import 'package:toku/style/style.dart';
 
 class Home extends StatefulWidget {
@@ -13,9 +16,9 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 int selectedIndex = 0;
   final List<Widget> page = [
-    const Center(),
-    const Center(),
-    const Center(),
+    const Homepage(),
+    const Checkout(),
+    const UserPage(),
   ];
 
   final List<BottomNavigationBarItem> item = [
@@ -29,16 +32,16 @@ int selectedIndex = 0;
     const BottomNavigationBarItem(
       icon: Padding(
         padding: EdgeInsets.all(5.0),
-        child: FaIcon(FontAwesomeIcons.magnifyingGlass),
+        child: FaIcon(FontAwesomeIcons.cartShopping),
       ),
-      label: 'Search',
+      label: 'Checkout',
     ),
     const BottomNavigationBarItem(
       icon: Padding(
         padding: EdgeInsets.all(5.0),
-        child: FaIcon(FontAwesomeIcons.earthAsia),
+        child: FaIcon(FontAwesomeIcons.userTie),
       ),
-      label: 'My space',
+      label: 'User',
     )
   ];
 
@@ -56,14 +59,15 @@ int selectedIndex = 0;
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: item,
+        // selectedLabelStyle: TextStyle(),
         type: BottomNavigationBarType.fixed,
         backgroundColor: white,
         currentIndex: selectedIndex,
-        unselectedItemColor: black.withOpacity(0.3),
-        selectedItemColor: black,
+        unselectedItemColor: black.withOpacity(0.2),
+        selectedItemColor: orange,
         showUnselectedLabels: true,
-        selectedFontSize: 12,
-        unselectedFontSize: 12,
+        selectedFontSize: 11,
+        unselectedFontSize: 11,
         iconSize: 18,
         onTap: _onItemTapped,
       ),
