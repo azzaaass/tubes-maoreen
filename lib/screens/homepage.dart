@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:toku/screens/film_detail.dart';
 
-import 'dart:developer';
-
 import 'package:toku/style/style.dart';
 
 class Homepage extends StatefulWidget {
@@ -28,16 +26,16 @@ class _HomepageState extends State<Homepage> {
       padding: const EdgeInsets.all(20.0),
       child: Column(
         children: [
-          Container(
-            height: 50,
-            child: Image.asset(
-              "assets/images/logo.png",
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
+          // Container(
+          //   height: 50,
+          //   child: Image.asset(
+          //     "assets/images/logo.png",
+          //     fit: BoxFit.cover,
+          //   ),
+          // ),
+          // const SizedBox(
+          //   height: 10,
+          // ),
           Container(
             padding: const EdgeInsets.only(left: 20),
             height: 40,
@@ -103,7 +101,6 @@ class _HomepageState extends State<Homepage> {
                       child: Text("Error"),
                     );
                   }
-                  // var id = snapshot.data!.id;
                   var data = snapshot.data!.docs;
                   return GridView.builder(
                     itemCount: data.length,
