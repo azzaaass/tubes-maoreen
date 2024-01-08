@@ -28,7 +28,16 @@ class _HomepageState extends State<Homepage> {
       padding: const EdgeInsets.all(20.0),
       child: Column(
         children: [
-          Image.asset("assets/images/logo.png"),
+          Container(
+            height: 50,
+            child: Image.asset(
+              "assets/images/logo.png",
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
           Container(
             padding: const EdgeInsets.only(left: 20),
             height: 40,

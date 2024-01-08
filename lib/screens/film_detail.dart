@@ -43,195 +43,214 @@ class _FilmDetailState extends State<FilmDetail> {
     MediaQueryData mediaQuery = MediaQuery.of(context);
     return Scaffold(
       body: SafeArea(
-          child: StreamBuilder(
-              stream: db.collection("buku").doc(widget.id).snapshots(),
-              builder: (context, snapshot) {
-                var data = snapshot.data;
-                return SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Stack(
-                        children: [
-                          SizedBox(
-                            height: 300,
-                            width: mediaQuery.size.width,
-                            child: Image.network(
-                              widget.image,
-                              fit: BoxFit.cover,
-                            ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  SizedBox(
+                    height: 300,
+                    width: mediaQuery.size.width,
+                    child: Image.network(
+                      widget.image,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                          onTap: () => Navigator.pop(context),
+                          child: const FaIcon(
+                            FontAwesomeIcons.angleLeft,
+                            size: 20,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                InkWell(
-                                  onTap: () => Navigator.pop(context),
-                                  child: const FaIcon(
-                                    FontAwesomeIcons.angleLeft,
-                                    size: 20,
-                                  ),
-                                ),
-                                FaIcon(
+                        ),
+                        StreamBuilder(
+                            stream: db
+                                .collection("userData")
+                                .doc(uid)
+                                .collection("favBuku")
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              var countCart = snapshot.data?.docs.length;
+                              if (countCart == 0) {
+                                return const FaIcon(
                                   FontAwesomeIcons.bagShopping,
                                   size: 20,
-                                )
-                              ],
-                            ),
-                          )
+                                );
+                              } else {
+                                return Badge(
+                                  label: Text(countCart.toString()),
+                                  textStyle: const TextStyle(fontSize: 12),
+                                  offset: const Offset(8, -3),
+                                  child: const FaIcon(
+                                    FontAwesomeIcons.bagShopping,
+                                    size: 20,
+                                  ),
+                                );
+                              }
+                            })
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          widget.name,
+                          style: GoogleFonts.raleway(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.w700,
+                              color: const Color(0xff272727)),
+                        )),
+                    Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          widget.creator,
+                          style: GoogleFonts.raleway(
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.w500,
+                              color: const Color(0xff272727)),
+                        )),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      "Deskripsi",
+                      style: GoogleFonts.raleway(
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w700,
+                          color: const Color(0xff272727)),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      widget.description,
+                      style: GoogleFonts.raleway(
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.w500,
+                          color: black.withOpacity(0.4)),
+                      softWrap: true,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 20),
+                      height: 1,
+                      width: MediaQuery.of(context).size.width,
+                      color: black.withOpacity(0.1),
+                    ),
+                    SizedBox(
+                      width: mediaQuery.size.width / 2,
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Halaman",
+                                style: GoogleFonts.raleway(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w500,
+                                    color: black.withOpacity(0.4)),
+                              ),
+                              Text(
+                                widget.page,
+                                style: GoogleFonts.raleway(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w500,
+                                    color: black.withOpacity(0.4)),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Tahun rilis",
+                                style: GoogleFonts.raleway(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w500,
+                                    color: black.withOpacity(0.4)),
+                              ),
+                              Text(
+                                widget.year,
+                                style: GoogleFonts.raleway(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w500,
+                                    color: black.withOpacity(0.4)),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "ISBN",
+                                style: GoogleFonts.raleway(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w500,
+                                    color: black.withOpacity(0.4)),
+                              ),
+                              Text(
+                                widget.isbn,
+                                style: GoogleFonts.raleway(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w500,
+                                    color: black.withOpacity(0.4)),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Berat buku (g)",
+                                style: GoogleFonts.raleway(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w500,
+                                    color: black.withOpacity(0.4)),
+                              ),
+                              Text(
+                                widget.weight,
+                                style: GoogleFonts.raleway(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w500,
+                                    color: black.withOpacity(0.4)),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  data?['name'] ?? '',
-                                  style: GoogleFonts.raleway(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w700,
-                                      color: const Color(0xff272727)),
-                                )),
-                            Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  data?['creator'] ?? '',
-                                  style: GoogleFonts.raleway(
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.w500,
-                                      color: const Color(0xff272727)),
-                                )),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            Text(
-                              "Deskripsi",
-                              style: GoogleFonts.raleway(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w700,
-                                  color: const Color(0xff272727)),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              data?['description'] ?? '',
-                              style: GoogleFonts.raleway(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w500,
-                                  color: black.withOpacity(0.4)),
-                              softWrap: true,
-                            ),
-                            Container(
-                              margin: const EdgeInsets.symmetric(vertical: 20),
-                              height: 1,
-                              width: MediaQuery.of(context).size.width,
-                              color: black.withOpacity(0.1),
-                            ),
-                            SizedBox(
-                              width: mediaQuery.size.width / 2,
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Halaman",
-                                        style: GoogleFonts.raleway(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: black.withOpacity(0.4)),
-                                      ),
-                                      Text(
-                                        data?['page'] ?? '',
-                                        style: GoogleFonts.raleway(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: black.withOpacity(0.4)),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Tahun rilis",
-                                        style: GoogleFonts.raleway(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: black.withOpacity(0.4)),
-                                      ),
-                                      Text(
-                                        data?['year'] ?? '',
-                                        style: GoogleFonts.raleway(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: black.withOpacity(0.4)),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "ISBN",
-                                        style: GoogleFonts.raleway(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: black.withOpacity(0.4)),
-                                      ),
-                                      Text(
-                                        data?['isbn'] ?? '',
-                                        style: GoogleFonts.raleway(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: black.withOpacity(0.4)),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Berat buku (g)",
-                                        style: GoogleFonts.raleway(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: black.withOpacity(0.4)),
-                                      ),
-                                      Text(
-                                        data?['weight'] ?? '',
-                                        style: GoogleFonts.raleway(
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w500,
-                                            color: black.withOpacity(0.4)),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              })),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
       bottomNavigationBar: InkWell(
         onTap: () async {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Barang ditambahkan'),
+              duration: Duration(milliseconds: 300),
+            ),
+          );
           await db
               .collection("userData")
               .doc(uid)
-              .collection("favFilm")
+              .collection("favBuku")
               .doc(widget.id)
               .set({
             'id': widget.id,
@@ -241,9 +260,10 @@ class _FilmDetailState extends State<FilmDetail> {
             'page': widget.page,
             'year': widget.year,
             'isbn': widget.isbn,
-            'wight': widget.weight,
+            'weight': widget.weight,
             'upload': widget.upload,
             'description': widget.description,
+            'isSelected': false,
           });
         },
         child: Container(

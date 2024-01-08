@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:toku/screens/checkout.dart';
 import 'package:toku/screens/homepage.dart';
 import 'package:toku/screens/user_page.dart';
 import 'package:toku/style/style.dart';
@@ -16,7 +17,7 @@ class _HomeState extends State<Home> {
 int selectedIndex = 0;
   final List<Widget> page = [
     const Homepage(),
-    const Center(),
+    const Checkout(),
     const UserPage(),
   ];
 
