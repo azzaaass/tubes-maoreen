@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:toku/auth/auth_service.dart';
+import 'package:toku/auth/register.dart';
+import 'package:toku/screens/home.dart';
+import 'package:toku/style/style.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   bool _isObscure = true;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +36,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Navigator.of(context).pop();
                 },
                 alignment: Alignment.centerLeft,
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_back_rounded,
                   color: Color(0xff272727),
                   size: 24.0,
@@ -40,7 +46,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 24.0,
               ),
               Text(
-                "Daftar, dan jelajahi lebih banyak!",
+                "Ayo, mari kita mulai!",
                 style: GoogleFonts.raleway(
                   color: Color(0xff272727),
                   fontSize: 24.0,
@@ -51,7 +57,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 12.0,
               ),
               Text(
-                "Ciptakan akun pribadi Anda dan nikmati pengalaman terbaik tersama Kami.",
+                "Silakan masukkan email dan kata sandi Anda untuk melanjutkan.",
                 style: GoogleFonts.raleway(
                   color: Color(0xff272727),
                   fontSize: 16.0,
@@ -77,10 +83,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 50.0,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
-                    border: Border.all(color: Color(0xffbcbbbf))),
+                    border: Border.all(color: const Color(0xffbcbbbf))),
                 child: TextField(
+                  controller: emailController,
                   style: GoogleFonts.raleway(
-                      color: Color(0xff272727),
+                      color: const Color(0xff272727),
                       fontSize: 16.0,
                       fontWeight: FontWeight.w500),
                   decoration: InputDecoration(
@@ -91,7 +98,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         const OutlineInputBorder(borderSide: BorderSide.none),
                     hintText: "Masukkan email",
                     hintStyle: GoogleFonts.raleway(
-                        color: Color(0xffbcbbbf),
+                        color: const Color(0xffbcbbbf),
                         fontSize: 16.0,
                         fontWeight: FontWeight.w500),
                   ),
@@ -103,7 +110,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Text(
                 "Kata Sandi",
                 style: GoogleFonts.raleway(
-                  color: Color(0xff272727),
+                  color: const Color(0xff272727),
                   fontSize: 20.0,
                   fontWeight: FontWeight.w600,
                 ),
@@ -116,11 +123,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 50.0,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
-                    border: Border.all(color: Color(0xffbcbbbf))),
+                    border: Border.all(color: const Color(0xffbcbbbf))),
                 child: TextField(
+                  controller: passwordController,
                   obscureText: _isObscure,
                   style: GoogleFonts.raleway(
-                      color: Color(0xff272727),
+                      color: const Color(0xff272727),
                       fontSize: 16.0,
                       fontWeight: FontWeight.w500),
                   decoration: InputDecoration(
@@ -140,7 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         const OutlineInputBorder(borderSide: BorderSide.none),
                     hintText: "Masukkan kata sandi",
                     hintStyle: GoogleFonts.raleway(
-                        color: Color(0xffbcbbbf),
+                        color: const Color(0xffbcbbbf),
                         fontSize: 16.0,
                         fontWeight: FontWeight.w500),
                   ),
@@ -154,7 +162,49 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 50.0,
                 child: TextButton(
                   style: TextButton.styleFrom(
-                    backgroundColor: Color(0xffff6b4a),
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      side: const BorderSide(color: orange, width: 1.0)),
+                  onPressed: () async {
+                    final message = await AuthService().login(
+                      email: emailController.text,
+                      password: passwordController.text,
+                    );
+
+                    if (message == 'Login Success') {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Home(),
+                          ));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(message ?? 'An error occurred'),
+                        ),
+                      );
+                    }
+                  },
+                  child: Text(
+                    "Masuk",
+                    style: GoogleFonts.raleway(
+                        color: orange,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w700),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 16.0,
+              ),
+              SizedBox(
+                width: MediaQuery.sizeOf(context).width,
+                height: 50.0,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: orange,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),

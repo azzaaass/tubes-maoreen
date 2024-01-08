@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:toku/screens/login.dart';
+import 'package:toku/auth/login.dart';
 
 class Onboarding extends StatelessWidget {
   const Onboarding({super.key});
@@ -36,7 +36,7 @@ class Onboarding extends StatelessWidget {
                 style: GoogleFonts.raleway(
                   fontSize: 24.0,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xff272727),
+                  color: const Color(0xff272727),
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -48,7 +48,7 @@ class Onboarding extends StatelessWidget {
                 style: GoogleFonts.raleway(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w400,
-                  color: Color(0xff272727),
+                  color: const Color(0xff272727),
                 ),
                 textAlign: TextAlign.center,
               ),

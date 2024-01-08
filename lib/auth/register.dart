@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:toku/screens/register.dart';
+import 'package:toku/auth/auth_service.dart';
+import 'package:toku/screens/home.dart';
+import 'package:toku/style/style.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   bool _isObscure = true;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.of(context).pop();
                 },
                 alignment: Alignment.centerLeft,
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_back_rounded,
                   color: Color(0xff272727),
                   size: 24.0,
@@ -41,9 +45,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 24.0,
               ),
               Text(
-                "Ayo, mari kita mulai!",
+                "Daftar, dan jelajahi lebih banyak!",
                 style: GoogleFonts.raleway(
-                  color: Color(0xff272727),
+                  color: const Color(0xff272727),
                   fontSize: 24.0,
                   fontWeight: FontWeight.w700,
                 ),
@@ -52,9 +56,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 12.0,
               ),
               Text(
-                "Silakan masukkan email dan kata sandi Anda untuk melanjutkan.",
+                "Ciptakan akun pribadi Anda dan nikmati pengalaman terbaik tersama Kami.",
                 style: GoogleFonts.raleway(
-                  color: Color(0xff272727),
+                  color: const Color(0xff272727),
                   fontSize: 16.0,
                   fontWeight: FontWeight.w400,
                 ),
@@ -65,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Text(
                 "Email",
                 style: GoogleFonts.raleway(
-                  color: Color(0xff272727),
+                  color: const Color(0xff272727),
                   fontSize: 20.0,
                   fontWeight: FontWeight.w600,
                 ),
@@ -78,10 +82,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 50.0,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
-                    border: Border.all(color: Color(0xffbcbbbf))),
+                    border: Border.all(color: const Color(0xffbcbbbf))),
                 child: TextField(
+                  controller: emailController,
                   style: GoogleFonts.raleway(
-                      color: Color(0xff272727),
+                      color: const Color(0xff272727),
                       fontSize: 16.0,
                       fontWeight: FontWeight.w500),
                   decoration: InputDecoration(
@@ -92,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         const OutlineInputBorder(borderSide: BorderSide.none),
                     hintText: "Masukkan email",
                     hintStyle: GoogleFonts.raleway(
-                        color: Color(0xffbcbbbf),
+                        color: const Color(0xffbcbbbf),
                         fontSize: 16.0,
                         fontWeight: FontWeight.w500),
                   ),
@@ -104,7 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Text(
                 "Kata Sandi",
                 style: GoogleFonts.raleway(
-                  color: Color(0xff272727),
+                  color: const Color(0xff272727),
                   fontSize: 20.0,
                   fontWeight: FontWeight.w600,
                 ),
@@ -117,11 +122,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 50.0,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
-                    border: Border.all(color: Color(0xffbcbbbf))),
+                    border: Border.all(color: const Color(0xffbcbbbf))),
                 child: TextField(
+                  controller: passwordController,
                   obscureText: _isObscure,
                   style: GoogleFonts.raleway(
-                      color: Color(0xff272727),
+                      color: const Color(0xff272727),
                       fontSize: 16.0,
                       fontWeight: FontWeight.w500),
                   decoration: InputDecoration(
@@ -141,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         const OutlineInputBorder(borderSide: BorderSide.none),
                     hintText: "Masukkan kata sandi",
                     hintStyle: GoogleFonts.raleway(
-                        color: Color(0xffbcbbbf),
+                        color: const Color(0xffbcbbbf),
                         fontSize: 16.0,
                         fontWeight: FontWeight.w500),
                   ),
@@ -155,44 +161,31 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 50.0,
                 child: TextButton(
                   style: TextButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    side: BorderSide(
-                      color: Color(0xffff6b4a),
-                      width: 1.0
-                    )
-                  ),
-                  onPressed: () {
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //     builder: (context) => const MenuTab()));
-                  },
-                  child: Text(
-                    "Masuk",
-                    style: GoogleFonts.raleway(
-                        color: Color(0xffff6b4a),
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 16.0,
-              ),
-              SizedBox(
-                width: MediaQuery.sizeOf(context).width,
-                height: 50.0,
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: Color(0xffff6b4a),
+                    backgroundColor: orange,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const RegisterScreen()));
+                  onPressed: () async {
+                    final message = await AuthService().register(
+                      username: "belum diisi",
+                      email: emailController.text,
+                      password: passwordController.text,
+                    );
+
+                    if (message == 'Registration Success') {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Home(),
+                          ));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(message ?? 'An error occurred'),
+                        ),
+                      );
+                    }
                   },
                   child: Text(
                     "Daftar",
