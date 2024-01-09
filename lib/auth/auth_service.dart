@@ -20,6 +20,7 @@ class AuthService {
       String imageUrl = "https://firebasestorage.googleapis.com/v0/b/tubes-iot-affe1.appspot.com/o/profile_images%2Fno-photo-available.png?alt=media&token=99c3e85d-64ff-4353-82a3-cb746f81e2c1";
       db.collection("userData").doc(uid).set({
         "username": username,
+        "phone": "",
         "image": imageUrl,
         "role": "none",
       }).onError((error, stackTrace) => print("Error writing : $error"));

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:toku/screens/film_detail.dart';
@@ -14,6 +15,7 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   final db = FirebaseFirestore.instance;
+  final uid = FirebaseAuth.instance.currentUser?.uid;
   TextEditingController? searchController = TextEditingController();
   // final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   var searchName = "";
@@ -26,16 +28,16 @@ class _HomepageState extends State<Homepage> {
       padding: const EdgeInsets.all(20.0),
       child: Column(
         children: [
-          // Container(
-          //   height: 50,
-          //   child: Image.asset(
-          //     "assets/images/logo.png",
-          //     fit: BoxFit.cover,
-          //   ),
-          // ),
-          // const SizedBox(
-          //   height: 10,
-          // ),
+          Container(
+            height: 50,
+            child: Image.asset(
+              "assets/images/toku_logo.png",
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
           Container(
             padding: const EdgeInsets.only(left: 20),
             height: 40,
@@ -114,6 +116,16 @@ class _HomepageState extends State<Homepage> {
                     itemBuilder: (context, index) {
                       // return Text(data[index]['name']);
                       return InkWell(
+                        onLongPress: () async {
+                          db.collection("buku").doc(data[index].id).delete();
+                          db.collection("userData").doc(uid).collection("favBuku").doc(data[index].id).delete();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Barang berhasil dihapus'),
+                              duration: Duration(milliseconds: 300),
+                            ),
+                          );
+                        },
                         onTap: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {

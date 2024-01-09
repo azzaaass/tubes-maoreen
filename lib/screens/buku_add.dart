@@ -247,7 +247,7 @@ class _BukuAddState extends State<BukuAdd> {
                           if (true) {
                             String url = await uploadImageToFirebase(filmId);
                             final db = FirebaseFirestore.instance;
-                            db.collection("buku").doc(filmId).set({
+                            await db.collection("buku").doc(filmId).set({
                               "image": url,
                               "name": nameController.text,
                               "creator": creatorController.text,
