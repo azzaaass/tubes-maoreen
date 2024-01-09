@@ -61,7 +61,7 @@ class _CheckoutState extends State<Checkout> {
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 1,
-                        mainAxisExtent: 100.0,
+                        mainAxisExtent: 95.0,
                         crossAxisSpacing: 10.0,
                         mainAxisSpacing: 10.0,
                       ),
@@ -86,10 +86,10 @@ class _CheckoutState extends State<Checkout> {
                             // }
                           },
                           child: Container(
-                            padding: EdgeInsets.all(5),
+                            padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
                               color: data[index]['isSelected']
-                                  ? Color.fromARGB(255, 122, 212, 254)
+                                  ? const Color.fromARGB(255, 122, 212, 254)
                                   : white,
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [
@@ -107,6 +107,7 @@ class _CheckoutState extends State<Checkout> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 SizedBox(
+                                  height: double.infinity,
                                     width: 80,
                                     child: Image.network(
                                       data[index]['image'],
@@ -166,7 +167,7 @@ class _CheckoutState extends State<Checkout> {
           }
         },
         child: Container(
-          margin: EdgeInsets.only(bottom: 20, top: 10, right: 20, left: 20),
+          margin: const EdgeInsets.only(bottom: 20, top: 10, right: 20, left: 20),
           width: mediaQuery.size.width,
           height: 50,
           decoration: BoxDecoration(
